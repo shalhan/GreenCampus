@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.shalhan.greencampus.JadwalFragment"
+    android:layout_margin="30dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_marginTop="45dp">
+
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:text="1"
+            android:id="@+id/bBus1"
+            android:background="#bd2929"
+            android:textSize="60dp"
+            android:textColor="#80ffffff"
+            android:onClick="bus1"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:text="2"
+            android:id="@+id/bBus2"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/bBus1"
+            android:layout_toEndOf="@+id/bBus1"
+            android:background="#5dae70"
+            android:textSize="60dp"
+            android:textColor="#80ffffff" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:text="3"
+            android:id="@+id/bBus3"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/bBus2"
+            android:layout_toEndOf="@+id/bBus2"
+            android:background="#e1f1e258"
+            android:textSize="60dp"
+            android:textColor="#80ffffff" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:text="4"
+            android:id="@+id/bBus4"
+            android:layout_below="@+id/bBus1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="#edb06f"
+            android:textSize="60dp"
+            android:textColor="#80ffffff" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:text="5"
+            android:id="@+id/bBus5"
+            android:layout_below="@+id/bBus1"
+            android:layout_toRightOf="@+id/bBus1"
+            android:layout_toEndOf="@+id/bBus1"
+            android:background="#53cfb6"
+            android:textSize="60dp"
+            android:textColor="#80ffffff" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:text="6"
+            android:id="@+id/bBus6"
+            android:layout_alignBottom="@+id/bBus5"
+            android:layout_toRightOf="@+id/bBus2"
+            android:layout_toEndOf="@+id/bBus2"
+            android:background="#c746c3"
+            android:textSize="60dp"
+            android:textColor="#80ffffff" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/group"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="20dp">
+    </LinearLayout>
+
+</RelativeLayout>
