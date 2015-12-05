@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.shalhan.greencampus.JadwalFragment"
-    android:layout_margin="30dp">
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,8 +13,8 @@
 
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:text="1"
             android:id="@+id/bBus1"
             android:background="#bd2929"
@@ -23,8 +23,8 @@
             android:onClick="bus1"/>
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:text="2"
             android:id="@+id/bBus2"
             android:layout_alignParentTop="true"
@@ -35,8 +35,8 @@
             android:textColor="#80ffffff" />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:text="3"
             android:id="@+id/bBus3"
             android:layout_alignParentTop="true"
@@ -47,8 +47,8 @@
             android:textColor="#80ffffff" />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:text="4"
             android:id="@+id/bBus4"
             android:layout_below="@+id/bBus1"
@@ -59,8 +59,8 @@
             android:textColor="#80ffffff" />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:text="5"
             android:id="@+id/bBus5"
             android:layout_below="@+id/bBus1"
@@ -71,8 +71,8 @@
             android:textColor="#80ffffff" />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:text="6"
             android:id="@+id/bBus6"
             android:layout_alignBottom="@+id/bBus5"
@@ -90,8 +90,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:id="@+id/group"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_marginTop="20dp">
+        android:layout_below="@+id/relativeLayout">
     </LinearLayout>
 
 </RelativeLayout>

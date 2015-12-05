@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#acd4b1"
+    android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:id="@+id/textView" />
-
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etUsername" />
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#f9eeee"
+        android:layout_marginTop="150dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etUsername"
+            android:hint="Username"
+            android:textColorHint="#c5bbbb" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password"
-        android:id="@+id/textView2" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/etPassword"
+            android:layout_below="@+id/etUsername"
+            android:layout_centerHorizontal="true"
+            android:hint="Password"
+            android:textColorHint="#c5bbbb" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/etPassword"
-        android:layout_gravity="center_horizontal" />
+    </RelativeLayout>
+
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:id="@+id/blogin" />
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal"
+        android:background="#e3e3e3"
+        android:textColor="#909090" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,15 +47,15 @@
         android:text="Doesn&apos;t have an account?"
         android:id="@+id/textView3"
         android:layout_gravity="center_horizontal"
-        android:textColor="#4f4949" />
+        android:textColor="#747373" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register!"
+        android:text="Sign Up!"
         android:id="@+id/tvRegister"
         android:layout_gravity="center_horizontal"
-        android:textColor="#bc2323"
+        android:textColor="#1d3faf"
         android:onClick="onClick"
         android:clickable="true"/>
 

@@ -103,11 +103,12 @@ public class GreenCampusActivity extends AppCompatActivity
             getSupportActionBar().setTitle("Jadwal Bus");
 
         } else if (id == R.id.nav_map) {
-            MapFragment mapFragment = new MapFragment();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragmentholder, mapFragment);
-            fragmentTransaction.commit();
-            getSupportActionBar().setTitle("Map");
+            Intent myIntent = new Intent(GreenCampusActivity.this, MapActivity.class);
+            startActivity(myIntent);
+//            MapFragment mapFragment = new MapFragment();
+//            fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.fragmentholder, mapFragment);
+//            fragmentTransaction.commit();
         }
         nav_view.setCheckedItem(id);
 
