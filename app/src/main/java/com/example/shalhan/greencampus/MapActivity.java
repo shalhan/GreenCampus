@@ -2,6 +2,10 @@ package com.example.shalhan.greencampus;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -10,9 +14,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
     private GoogleMap mMap;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,72 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setUpMapIfNeeded();
+
+        spinner = (Spinner) findViewById(R.id.sListMap);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.map_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        float zoom = 17.0f;
+
+        switch(position){
+            case 1:
+                //FMIPA
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.55767 , 106.730686), zoom));
+                break;
+            case 2:
+                //FATETA
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.558438, 106.728616), zoom));
+                break;
+            case 3:
+                //FAPERTA
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.558683, 106.730365), zoom));
+                break;
+            case 4:
+                //FEMA
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.55912, 106.729206), zoom));
+                break;
+            case 5:
+                //FEM
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.558598 , 106.727854), zoom));
+                break;
+            case 6:
+                //FAPET
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.557532 , 106.72205), zoom));
+                break;
+            case 7:
+                //FPIK
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.557638 , 106.723455), zoom));
+                break;
+            case 8:
+                //FKH
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.556583  , 106.720086), zoom));
+                break;
+            case 9:
+                //Al-Huriyah
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.555805 , 106.725451), zoom));
+                break;
+            case 10:
+                //GWW
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.560356  , 106.730783), zoom));
+                break;
+            case 11:
+                //Rektorat
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.559973   , 106.725461), zoom));
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     @Override
