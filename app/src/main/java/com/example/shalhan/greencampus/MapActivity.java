@@ -22,25 +22,62 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        setUpMapIfNeeded();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpMapIfNeeded();
+    }
+
+    private void setUpMapIfNeeded() {
+        if (mMap == null){
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+            if (mMap != null){
+                setUpMap();
+            }
+        }
+
+    }
+
+    private void setUpMap() {
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("marker"));
+        mMap.setMyLocationEnabled(true);
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng ipb = new LatLng(-6.555944, 106.724045);
+        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(ipb , 15.0f) );
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.561742, 106.727135)).title("Pintu Depan"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.560314, 106.726406)).title("Rektorat"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.560207, 106.725311)).title("Rektorat 2"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.560356, 106.730096)).title("GWW"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.559205, 106.73089)).title("FAPERTA"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.557223, 106.731749)).title("FMIPA"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.55588, 106.731534)).title("Asrama Putri"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(-6.555773, 106.729946)).title("Menwa"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.55686, 106.730032)).title("FAHUTAN"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.557926, 106.728981)).title("FATETA"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.558949, 106.727221)).title("FEM"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.559845, 106.728573)).title("FEMA"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.557009, 106.726513)).title("LSI"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.556455,  106.725526)).title("Al-Huriyah"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.556306, 106.724603)).title("Gor Lama"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.556775, 106.72353)).title("FPIK"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.556818, 106.722479)).title("FAPET"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.55637 , 106.720247)).title("FKH"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.557265 , 106.719067)).title("Lab FPIK"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.560186 , 106.724024)).title("Green TV"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng( -6.5533 , 106.727393)).title("Asrama Putra"));
+
+
+
+
     }
 }
