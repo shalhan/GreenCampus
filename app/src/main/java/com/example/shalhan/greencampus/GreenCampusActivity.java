@@ -24,6 +24,7 @@ public class GreenCampusActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction;
     NavigationView nav_view;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,8 @@ public class GreenCampusActivity extends AppCompatActivity
         nav_view = (NavigationView) findViewById(R.id.nav_view);
 
         itemSelect(R.id.nav_jadwal);
+        GreenDataSource myDb =  new GreenDataSource(this);
+
     }
 
     @Override

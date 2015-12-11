@@ -7,12 +7,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.lang.reflect.Field;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
@@ -30,6 +34,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         setUpMapIfNeeded();
 
         spinner = (Spinner) findViewById(R.id.sListMap);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.map_array, android.R.layout.simple_spinner_item);
 // Specify the layout to use when the list of choices appears
@@ -113,8 +118,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("marker"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("marker"));
         mMap.setMyLocationEnabled(true);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
     }
 
 

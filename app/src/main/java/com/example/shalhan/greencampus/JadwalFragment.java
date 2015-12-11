@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 
 
 /**
@@ -19,9 +19,8 @@ import android.widget.TextView;
  */
 public class JadwalFragment extends Fragment {
 
-    TextView tvBus1;
     Context context;
-    FragmentManager fragmentManager;
+
 
     public JadwalFragment() {
         // Required empty public constructor
@@ -44,6 +43,8 @@ public class JadwalFragment extends Fragment {
 
         return rootView;
     }
+
+
 
     @Override
     public void onDestroy() {
