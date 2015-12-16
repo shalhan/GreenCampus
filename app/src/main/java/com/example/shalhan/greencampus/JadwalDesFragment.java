@@ -2,6 +2,7 @@ package com.example.shalhan.greencampus;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,9 +26,17 @@ public class JadwalDesFragment extends Fragment {
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+    TextView nobus;
+    private String ID;
+    GreenDataSource myDb;
 
     public JadwalDesFragment() {
-        // Required empty public constructor
+
+    }
+
+    public JadwalDesFragment(String id) {
+        ID = id;
+
     }
 
     @Override
@@ -36,15 +45,11 @@ public class JadwalDesFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_jadwal_des, container, false);
         context = rootView.getContext();
 
+        nobus = (TextView) rootView.findViewById(R.id.tvNoBus);
+        nobus.setText(ID);
 
-
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         expListView = (ExpandableListView) rootView.findViewById(R.id.lvExp);
+        myDb = new GreenDataSource(getActivity());
 
         // preparing list data
         prepareListData();
@@ -53,11 +58,26 @@ public class JadwalDesFragment extends Fragment {
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
+        int idBus = Integer.parseInt(ID);
 
         // Adding child data
         listDataHeader.add("Bus Rute");
@@ -65,12 +85,30 @@ public class JadwalDesFragment extends Fragment {
 
         // Adding child data
         List<String> busrute = new ArrayList<String>();
-        busrute.add("The Shawshank Redemption");
-        busrute.add("The Godfather");
+            Cursor cursor1 = myDb.getBusRoute();
+
+        if(cursor1.moveToFirst()) {
+            do {
+                if (idBus == cursor1.getInt(0)) {
+                    busrute.add(cursor1.getString(3));
+                }
+            }
+            while (cursor1.moveToNext());
+        }
 
         List<String> busschedule = new ArrayList<String>();
-        busschedule.add("The Conjuring");
-        busschedule.add("Despicable Me 2");
+            Cursor cursor = myDb.getBusSchedule();
+            String jadwal = "";
+
+
+            cursor.moveToFirst();
+
+            while(cursor.getInt(0)!=idBus){
+                cursor.moveToNext();
+            }
+            jadwal = cursor.getString(2);
+
+            busschedule.add(jadwal);
 
 
         listDataChild.put(listDataHeader.get(0), busrute); // Header, Child data

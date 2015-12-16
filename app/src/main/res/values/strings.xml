@@ -23,5 +23,16 @@
         <item>GWW</item>
         <item>Rektorat</item>
     </string-array>
+
+    <string-array name="saldo_array">
+        <item>(Select your budget)</item>
+        <item>Rp.10.000,00</item>
+        <item>Rp.20.000,00</item>
+        <item>Rp.50.000,00</item>
+        <item>Rp.100.000,00</item>
+        <item>Rp.200.000,00</item>
+        <item>Rp.500.000,00</item>
+        <item>Rp.1.000.000,00</item>
+    </string-array>
     <string name="title_activity_map">Map</string>
 </resources>

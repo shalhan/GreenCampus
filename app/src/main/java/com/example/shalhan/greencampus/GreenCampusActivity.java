@@ -1,6 +1,7 @@
 package com.example.shalhan.greencampus;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,7 +24,14 @@ public class GreenCampusActivity extends AppCompatActivity
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     NavigationView nav_view;
-
+    GreenDataSource myDb;
+    SessionManagement session;
+    UserLogin usr;
+//    TapcashData tapcash;
+//    BusRouteData bus;
+//    ShelterData shel;
+//    BusData busD;
+//    MapData mapD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +52,13 @@ public class GreenCampusActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         nav_view = (NavigationView) findViewById(R.id.nav_view);
 
-        itemSelect(R.id.nav_jadwal);
-        GreenDataSource myDb =  new GreenDataSource(this);
+        session = new SessionManagement(this);
 
+        itemSelect(R.id.nav_jadwal);
+
+        myDb = new GreenDataSource(this);
+        usr = new UserLogin("username", "0");
+        myDb.userLogin(usr);
     }
 
     @Override
@@ -96,12 +108,22 @@ public class GreenCampusActivity extends AppCompatActivity
 
     private void itemSelect(int id) {
         if (id == R.id.nav_login) {
-            Intent myIntent = new Intent(GreenCampusActivity.this, LoginActivity.class);
-            startActivity(myIntent);
+            if(!(myDb.checkLogin())) {
+                Intent myIntent = new Intent(GreenCampusActivity.this, LoginActivity.class);
+                startActivity(myIntent);
+            }else{
+                TapcashFragment tapcashFragment = new TapcashFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentholder, tapcashFragment);
+//                fragmentTransaction.addToBackStack();
+                fragmentTransaction.commit();
+                getSupportActionBar().setTitle("Tapcash");
+            }
         } else if (id == R.id.nav_jadwal) {
             JadwalFragment jadwalFragment = new JadwalFragment();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragmentholder, jadwalFragment);
+//            fragmentTransaction.addToBackStack();
             fragmentTransaction.commit();
             getSupportActionBar().setTitle("Jadwal Bus");
 
@@ -114,7 +136,6 @@ public class GreenCampusActivity extends AppCompatActivity
 //            fragmentTransaction.commit();
         }
         nav_view.setCheckedItem(id);
-
     }
 
     public void setTitle(String title){
@@ -122,9 +143,41 @@ public class GreenCampusActivity extends AppCompatActivity
     }
 
     public void bus1(View v){
-        JadwalDesFragment jadwalDesFragment = new JadwalDesFragment();
+        JadwalDesFragment jadwalDesFragment = new JadwalDesFragment("1");
         FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.group, jadwalDesFragment, "bus1");
+        fragmentTransaction.replace(R.id.group, jadwalDesFragment, "bus1");
         fragmentTransaction.commit();
     }
+    public void bus2(View v){
+        JadwalDesFragment jadwalDesFragment = new JadwalDesFragment("2");
+        FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.group, jadwalDesFragment, "bus2");
+        fragmentTransaction.commit();
+    }
+    public void bus3(View v){
+        JadwalDesFragment jadwalDesFragment = new JadwalDesFragment("3");
+        FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.group, jadwalDesFragment, "bus3");
+        fragmentTransaction.commit();
+    }
+    public void bus4(View v){
+        JadwalDesFragment jadwalDesFragment = new JadwalDesFragment("4");
+        FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.group, jadwalDesFragment, "bus4");
+        fragmentTransaction.commit();
+    }
+    public void bus5(View v){
+        JadwalDesFragment jadwalDesFragment = new JadwalDesFragment("5");
+        FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.group, jadwalDesFragment, "bus5");
+        fragmentTransaction.commit();
+    }
+    public void bus6(View v){
+        JadwalDesFragment jadwalDesFragment = new JadwalDesFragment("6");
+        FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.group, jadwalDesFragment, "bus6");
+        fragmentTransaction.commit();
+    }
+
+
 }

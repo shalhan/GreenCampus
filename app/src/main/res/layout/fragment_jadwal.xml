@@ -32,7 +32,8 @@
             android:layout_toEndOf="@+id/bBus1"
             android:background="#5dae70"
             android:textSize="60dp"
-            android:textColor="#80ffffff" />
+            android:textColor="#80ffffff"
+            android:onClick="bus2"/>
 
         <Button
             android:layout_width="@dimen/button_width"
@@ -44,7 +45,8 @@
             android:layout_toEndOf="@+id/bBus2"
             android:background="#e1f1e258"
             android:textSize="60dp"
-            android:textColor="#80ffffff" />
+            android:textColor="#80ffffff"
+            android:onClick="bus3"/>
 
         <Button
             android:layout_width="@dimen/button_width"
@@ -56,7 +58,8 @@
             android:layout_alignParentStart="true"
             android:background="#edb06f"
             android:textSize="60dp"
-            android:textColor="#80ffffff" />
+            android:textColor="#80ffffff"
+            android:onClick="bus4"/>
 
         <Button
             android:layout_width="@dimen/button_width"
@@ -68,7 +71,8 @@
             android:layout_toEndOf="@+id/bBus1"
             android:background="#53cfb6"
             android:textSize="60dp"
-            android:textColor="#80ffffff" />
+            android:textColor="#80ffffff"
+            android:onClick="bus5"/>
 
         <Button
             android:layout_width="@dimen/button_width"
@@ -80,7 +84,8 @@
             android:layout_toEndOf="@+id/bBus2"
             android:background="#c746c3"
             android:textSize="60dp"
-            android:textColor="#80ffffff" />
+            android:textColor="#80ffffff"
+            android:onClick="bus6"/>
 
     </RelativeLayout>
 

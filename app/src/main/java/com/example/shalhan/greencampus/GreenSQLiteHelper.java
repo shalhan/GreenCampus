@@ -10,8 +10,8 @@ import android.provider.BaseColumns;
  */
 public class GreenSQLiteHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "greencp.db";
-    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "green.db";
+    private static final int DB_VERSION = 3;
 
     //table USER
     public static final String USER_TABLE = "USER";
@@ -19,15 +19,18 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLLUMN_PASSWORD = "PASWORD";
     public static final String COLLUMN_NOREK=  "NOREK";
     public static final String COLLUMN_EMAIL = "EMAIL";
+    public static final String COLLUMN_STATUS = "STATUS";
     public static final String CREATE_USER =
             "CREATE TABLE " + USER_TABLE + "("
                     + COLLUMN_NOREK + " TEXT PRIMARY KEY,"
-                    +COLLUMN_USERNAME + " TEXT,"
+                    + COLLUMN_USERNAME + " TEXT,"
                     + COLLUMN_PASSWORD + " TEXT,"
-                    + COLLUMN_EMAIL + " TEXT)";
+                    + COLLUMN_EMAIL + " TEXT, "
+                    + COLLUMN_STATUS + " INTEGER)";
 
     //table tapcash
     public static final String TAPCASH_TABLE = "TAPCASH";
+    public static final String TAPCASH_ID = "KEY_ID";
     public static final String COLLUMN_FNAME = "FNAME";
     public static final String COLLUMN_LNAME = "LNAME";
     public static final String COLLUMN_SALDOT = "SALDOT";
@@ -35,47 +38,76 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
     public static final String FOREIGN_KEY_NOREK = "USER_NOREK";
     public static final String CREATE_TAPCASH =
             "CREATE TABLE " + TAPCASH_TABLE +"("
-                    + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLLUMN_SALDOT + " TEXT, " +
-                    COLLUMN_SALDOR + " TEXT, " +
+                    + TAPCASH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLLUMN_SALDOT + " REAL, " +
+                    COLLUMN_SALDOR + " REAL, " +
                     COLLUMN_FNAME + " TEXT, " +
                     COLLUMN_LNAME + " TEXT, " +
                     FOREIGN_KEY_NOREK + " TEXT, " +
                     "FOREIGN KEY(" + FOREIGN_KEY_NOREK + ") REFERENCES USER(NOREK))";
 
+    //table shelter
+    public static final String SHELTER_TABLE = "SHELTER";
+    public static final String SHELTER_ID = "SHELTER_ID";
+    public static final String COLLUMN_NAMAS = "NAMA";
+    public static final String COLLUMN_KOORDINATSX = "KOORDINATSX";
+    public static final String COLLUMN_KOORDINATSY = "KOORDINATSY";
+    public static final String CREATE_SHELTER =
+            "CREATE TABLE " + SHELTER_TABLE + "("
+                    + SHELTER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLLUMN_NAMAS + " TEXT, " +
+                    COLLUMN_KOORDINATSX + " REAL, " +
+                    COLLUMN_KOORDINATSY + " REAL)";
+
 
     //table bus
     public static final String BUS_TABLE = "BUS";
+    public static final String BUS_ID = "BUS_ID";
     public static final String COLLUMN_NOBUS = "NOBUS";
     public static final String COLLUMN_JADWAL = "JADWAL";
     public static final String FOREIGN_KEY_SHELTER ="SHELTER_ID";
     public static final String CREATE_BUS =
             "CREATE TABLE " + BUS_TABLE + "("
-                    + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    + BUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLLUMN_NOBUS + " TEXT, " +
                     COLLUMN_JADWAL + " TEXT, " +
                     FOREIGN_KEY_SHELTER + " INTEGER, " +
-                    "FOREIGN KEY(" + FOREIGN_KEY_SHELTER + ") REFERENCES SHELTER(_ID))";
+                    "FOREIGN KEY(" + FOREIGN_KEY_SHELTER + ") REFERENCES SHELTER(SHELTER_ID))";
 
-    //table shelter
-    public static final String SHELTER_TABLE = "SHELTER";
-    public static final String COLLUMN_NAMAS = "NAMA";
-    public static final String COLLUMN_KOORDINATS = "KOORDINAT";
-    public static final String CREATE_SHELTER =
-            "CREATE TABLE " + SHELTER_TABLE + "("
-                    + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLLUMN_NAMAS + " TEXT, " +
-                    COLLUMN_KOORDINATS + " TEXT) ";
+    //table bus_route
+    public static final String BUS_ROUTE_TABLE = "BUS_ROUTE";
+    public static final String ID_BUS = "BUS_ID";
+    public static final String ID_SHELTER = "SHELTER_ID";
+    public static final String CREATE_BUS_ROUTE =
+        "CREATE TABLE " + BUS_ROUTE_TABLE +  "("
+                + ID_BUS + " INTEGER, "
+                + ID_SHELTER + " INTEGER, "
+                + "FOREIGN KEY(" + ID_BUS + ") REFERENCES BUS(BUS_ID), "
+                + "FOREIGN KEY(" + ID_SHELTER + ") REFERENCES SHELTER(SHELTER_ID))";
+
 
     //table map
     public static final String MAP_TABLE = "MAP";
+    public static final String MAP_ID = "MAP_ID";
     public static final String COLLUMN_NAMAM = "NAMA MAP";
-    public static final String COLLUMN_KOORDINATM = "KOORDINAT";
+    public static final String COLLUMN_KOORDINATMX = "KOORDINATMX";
+    public static final String COLLUMN_KOORDINATMY = "KOORDINATMY";
     public static final String CREATE_MAP =
             "CREATE TABLE " + MAP_TABLE + "("
-                    + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    + MAP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLLUMN_NAMAM + " TEXT, " +
-                    COLLUMN_KOORDINATM + " TEXT) ";
+                    COLLUMN_KOORDINATMX + " REAL," +
+                    COLLUMN_KOORDINATMY + " REAL)";
+
+    //table login
+    public static final String LOGIN_TABLE = "LOGIN";
+    public static final String COLLUMN_USERLOG = "USERNAME";
+    public static final String COLLUMN_STATUSLOG = "STATUS";
+    public static final String CREATE_LOGIN =
+            "CREATE TABLE " + LOGIN_TABLE + "("
+                    + COLLUMN_USERLOG + " TEXT, "
+                    + COLLUMN_STATUSLOG + " TEXT)";
+
 
 
     public GreenSQLiteHelper(Context context){
@@ -85,15 +117,18 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER);
-       db.execSQL(CREATE_TAPCASH);
+        db.execSQL(CREATE_TAPCASH);
         db.execSQL(CREATE_SHELTER);
         db.execSQL(CREATE_BUS);
         db.execSQL(CREATE_MAP);
+        db.execSQL(CREATE_BUS_ROUTE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+       if(oldVersion < newVersion) {
+           db.execSQL(CREATE_LOGIN);
+       }
     }
 }
 

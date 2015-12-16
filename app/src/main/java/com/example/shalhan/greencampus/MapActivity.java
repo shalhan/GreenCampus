@@ -1,5 +1,6 @@
 package com.example.shalhan.greencampus;
 
+import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,11 +18,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
     private GoogleMap mMap;
     Spinner spinner;
+    GreenDataSource myDb;
+    Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         setUpMapIfNeeded();
 
         spinner = (Spinner) findViewById(R.id.sListMap);
+        myDb = new GreenDataSource(this);
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.map_array, android.R.layout.simple_spinner_item);
@@ -47,11 +53,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         float zoom = 17.0f;
+/*
+        cursor = myDb.getMap();
+        cursor.moveToFirst();
 
-        switch(position){
+        do{
+            if(cursor.getInt(0) == position){
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(cursor.getDouble(2), cursor.getDouble(3)), zoom));}
+        }while(cursor.moveToNext());
+*/
+
+
+        switch (position) {
             case 1:
                 //FMIPA
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.55767 , 106.730686), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.55767, 106.730686), zoom));
                 break;
             case 2:
                 //FATETA
@@ -67,37 +83,40 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 break;
             case 5:
                 //FEM
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.558598 , 106.727854), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.558598, 106.727854), zoom));
                 break;
             case 6:
                 //FAPET
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.557532 , 106.72205), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.557532, 106.72205), zoom));
                 break;
             case 7:
                 //FPIK
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.557638 , 106.723455), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.557638, 106.723455), zoom));
                 break;
             case 8:
                 //FKH
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.556583  , 106.720086), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.556583, 106.720086), zoom));
                 break;
             case 9:
                 //Al-Huriyah
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.555805 , 106.725451), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.555805, 106.725451), zoom));
                 break;
             case 10:
                 //GWW
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.560356  , 106.730783), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.560356, 106.730783), zoom));
                 break;
             case 11:
                 //Rektorat
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.559973   , 106.725461), zoom));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.559973, 106.725461), zoom));
                 break;
+
         }
     }
 
+
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
 
     }
 
@@ -130,7 +149,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         // Add a marker in Sydney and move the camera
         LatLng ipb = new LatLng(-6.555944, 106.724045);
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(ipb , 15.0f) );
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ipb, 15.0f));
+        myDb = new GreenDataSource(this);
+        Cursor cursor = myDb.getShelter();
+        cursor.moveToFirst();
+        do{
+            mMap.addMarker(new MarkerOptions().position(new LatLng(cursor.getDouble(2), cursor.getDouble(3))).title(cursor.getString(1)));
+        }while(cursor.moveToNext());
+
+        /*
         mMap.addMarker(new MarkerOptions().position(new LatLng(-6.561742, 106.727135)).title("Pintu Depan"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(-6.560314, 106.726406)).title("Rektorat"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(-6.560207, 106.725311)).title("Rektorat 2"));
@@ -152,7 +179,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap.addMarker(new MarkerOptions().position(new LatLng( -6.557265 , 106.719067)).title("Lab FPIK"));
         mMap.addMarker(new MarkerOptions().position(new LatLng( -6.560186 , 106.724024)).title("Green TV"));
         mMap.addMarker(new MarkerOptions().position(new LatLng( -6.5533 , 106.727393)).title("Asrama Putra"));
-
+        */
 
 
 
