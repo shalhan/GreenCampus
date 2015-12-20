@@ -13,23 +13,6 @@
         android:layout_marginTop="100dp"
         android:padding="10dp"
         android:id="@+id/relativeLayout2">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etUsername"
-            android:hint="Username"
-            android:textColorHint="#c5bbbb" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/etEmail"
-            android:hint="Email address"
-            android:textColorHint="#c5bbbb"
-            android:layout_below="@+id/etUsername"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
         <EditText
             android:layout_width="match_parent"
@@ -46,6 +29,19 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/etCPassword"
+            android:hint="Confirm Password"
+            android:textColorHint="#c5bbbb"
+            android:layout_below="@+id/etPassword"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
             android:ems="10"
             android:id="@+id/etNoRek"
             android:hint="Nomor Rekening"
@@ -57,14 +53,24 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/etCPassword"
-            android:hint="Confirm Password"
-            android:textColorHint="#c5bbbb"
-            android:layout_below="@+id/etPassword"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:id="@+id/etUsername"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Username"
+            android:textColorHint="#c5bbbb"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/etEmail"
+            android:layout_below="@+id/etUsername"
+            android:layout_centerHorizontal="true"
+            android:hint="Email Address"
+            android:textColorHint="#c5bbbb"/>
 
     </RelativeLayout>
 

@@ -163,6 +163,17 @@ public class GreenDataSource {
         return cursor;
     }
 
+    public Cursor getAllUserData(){
+        SQLiteDatabase database = read();
+
+        String select = "select username, fname, lname, norek, saldot, saldor  from user inner join tapcash on norek = user_norek";
+
+        Cursor cursor = database.rawQuery(select, null);
+
+
+        return cursor;
+    }
+
     public Cursor getBusSchedule(){
         SQLiteDatabase database = read();
 
@@ -275,11 +286,31 @@ public class GreenDataSource {
         ContentValues userValues = new ContentValues();
         userValues.put(mGreenSQLiteHelper.COLLUMN_USERLOG, user.getUser());
         userValues.put(mGreenSQLiteHelper.COLLUMN_STATUSLOG, user.getStatus());
+        userValues.put(mGreenSQLiteHelper.COLLUMN_PASSLOG, user.getPass());
         database.insert(GreenSQLiteHelper.LOGIN_TABLE, null, userValues);
 
         database.setTransactionSuccessful();
         database.endTransaction();
         close(database);
+    }
+
+    public Cursor getUserLogin(){
+        SQLiteDatabase database = read();
+
+        Cursor cursor = database.query(
+                mGreenSQLiteHelper.LOGIN_TABLE,
+                new String[]{
+                        mGreenSQLiteHelper.COLLUMN_USERLOG,
+                        mGreenSQLiteHelper.COLLUMN_STATUSLOG,
+                        mGreenSQLiteHelper.COLLUMN_PASSLOG,
+                },
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        return cursor;
     }
 
     public boolean checkLogin(){

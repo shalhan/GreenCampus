@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e2e2e2"
+    android:background="#e6e6e6"
     android:padding="20dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:contextClickable="false">
 
 
         <TextView
@@ -41,7 +42,8 @@
             android:id="@+id/lvExp"
             android:layout_below="@+id/tvNoBus"
             android:layout_alignLeft="@+id/textview"
-            android:layout_alignStart="@+id/textview" />
+            android:layout_alignStart="@+id/textview"
+            android:contextClickable="false" />
 
     </RelativeLayout>
 </LinearLayout>

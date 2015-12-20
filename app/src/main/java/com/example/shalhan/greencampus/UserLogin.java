@@ -6,15 +6,17 @@ package com.example.shalhan.greencampus;
 public class UserLogin {
     private String user;
     private String status;
+    private String pass;
 
 
     public UserLogin(){
 
     }
 
-    public UserLogin(String usr, String stat){
+    public UserLogin(String usr, String stat, String pass){
         setUser(usr);
         setStatus(stat);
+        setPass(pass);
     }
 
     public String getUser() {
@@ -31,5 +33,13 @@ public class UserLogin {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setPass(String pass){
+        this.pass = pass;
+    }
+
+    public String getPass(){
+        return pass;
     }
 }

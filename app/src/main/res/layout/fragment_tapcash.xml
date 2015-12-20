@@ -2,21 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:background="#c6e9d5"
+    android:id="@+id/viewgroup">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
+        android:layout_height="120dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/tapcashLayout"
+        android:background="#80ffffff"
+        android:padding="10dp"
+        android:layout_alignParentEnd="true">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama :"
+            android:text="Nama "
             android:id="@+id/textview"
             android:textSize="18sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Shalhan Radifan"
             android:id="@+id/tvName"
@@ -29,7 +35,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nomor Rekening :"
+            android:text="Nomor Rekening "
             android:id="@+id/textView2"
             android:layout_below="@+id/textview"
             android:layout_alignParentLeft="true"
@@ -37,7 +43,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="12345678"
             android:id="@+id/tvNoRek"
@@ -49,7 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Saldo Rekening :"
+            android:text="Saldo Rekening "
             android:id="@+id/textView4"
             android:layout_below="@+id/textView2"
             android:layout_alignLeft="@+id/textView2"
@@ -57,7 +63,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="200000"
             android:id="@+id/tvSaldoR"
@@ -69,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Saldo Tapcash :"
+            android:text="Saldo Tapcash "
             android:id="@+id/textView6"
             android:layout_below="@+id/textView4"
             android:layout_alignParentLeft="true"
@@ -77,7 +83,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvSaldoT"
             android:textSize="18sp"
@@ -88,32 +94,52 @@
             android:layout_alignEnd="@+id/tvNoRek"
             android:text="25000" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Isi Ulang Tapcash"
-            android:id="@+id/bIsiUlang"
-            android:layout_below="@+id/textView6"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/bIsiUlang"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/isitapcash"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/isitapcash"
+            android:padding="20dp"
+            android:layout_below="@+id/textView6"
+            android:layout_centerHorizontal="true">
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:id="@+id/bLogout"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:id="@+id/bBigger"
+        android:background="#adcdc6"
+        android:textColor="#80ffffff"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/tapcashLayout"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/bBigger"
+        android:background="#80ffffff"
+        android:padding="10dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your recent transaction"
+            android:id="@+id/textView" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/transaksi"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
 
 </RelativeLayout>

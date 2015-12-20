@@ -10,8 +10,8 @@ import android.provider.BaseColumns;
  */
 public class GreenSQLiteHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "green.db";
-    private static final int DB_VERSION = 3;
+    private static final String DB_NAME = "greencapp.db";
+    private static final int DB_VERSION = 1;
 
     //table USER
     public static final String USER_TABLE = "USER";
@@ -103,11 +103,12 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
     public static final String LOGIN_TABLE = "LOGIN";
     public static final String COLLUMN_USERLOG = "USERNAME";
     public static final String COLLUMN_STATUSLOG = "STATUS";
+    public static final String COLLUMN_PASSLOG = "PASS";
     public static final String CREATE_LOGIN =
             "CREATE TABLE " + LOGIN_TABLE + "("
                     + COLLUMN_USERLOG + " TEXT, "
-                    + COLLUMN_STATUSLOG + " TEXT)";
-
+                    + COLLUMN_STATUSLOG + " TEXT, "
+                    + COLLUMN_PASSLOG + " TEXT)";
 
 
     public GreenSQLiteHelper(Context context){
@@ -122,13 +123,12 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_BUS);
         db.execSQL(CREATE_MAP);
         db.execSQL(CREATE_BUS_ROUTE);
+        db.execSQL(CREATE_LOGIN);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       if(oldVersion < newVersion) {
-           db.execSQL(CREATE_LOGIN);
-       }
+
     }
 }
 

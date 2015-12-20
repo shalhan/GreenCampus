@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity{
                       if(username.equals(cursor.getString(1)) && password.equals(cursor.getString(2))){
                           status = true;
                           myDb.clearLogin();
-                          usr = new UserLogin(cursor.getString(1), "1");
+                          usr = new UserLogin(cursor.getString(1), "1", cursor.getString(2));
                           myDb.userLogin(usr);
                       }
                    }else{
@@ -69,8 +69,8 @@ public class LoginActivity extends AppCompatActivity{
 
                 if(status){
                     Toast.makeText(getBaseContext(), "Welcome", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(LoginActivity.this, GreenCampusActivity.class));
 
-                    finish();
                 }else{
                     Toast.makeText(getBaseContext(), "Username or id are wrong", Toast.LENGTH_LONG).show();
                 }

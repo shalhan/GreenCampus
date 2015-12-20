@@ -27,11 +27,11 @@ public class GreenCampusActivity extends AppCompatActivity
     GreenDataSource myDb;
     SessionManagement session;
     UserLogin usr;
-//    TapcashData tapcash;
-//    BusRouteData bus;
-//    ShelterData shel;
-//    BusData busD;
-//    MapData mapD;
+    TapcashData tapcash;
+    BusRouteData bus;
+    ShelterData shel;
+    BusData busD;
+    MapData mapD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +57,10 @@ public class GreenCampusActivity extends AppCompatActivity
         itemSelect(R.id.nav_jadwal);
 
         myDb = new GreenDataSource(this);
-        usr = new UserLogin("username", "0");
-        myDb.userLogin(usr);
+//        usr = new UserLogin("", "0","");
+//        myDb.userLogin(usr);
+
+
     }
 
     @Override
@@ -74,8 +76,12 @@ public class GreenCampusActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.green_campus, menu);
-        return true;
+        if (myDb.checkLogin()){
+            getMenuInflater().inflate(R.menu.green_campus, menu);
+            return true;
+
+        }else return false;
+
     }
 
     @Override
@@ -85,8 +91,14 @@ public class GreenCampusActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            myDb.clearLogin();
+            usr = new UserLogin("", "0","");
+           myDb.userLogin(usr);
+            startActivity(new Intent(GreenCampusActivity.this, GreenCampusActivity.class));
             return true;
         }
 
