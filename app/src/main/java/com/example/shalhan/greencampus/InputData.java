@@ -1,15 +1,20 @@
 package com.example.shalhan.greencampus;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by shalhan on 14/12/15.
  */
-public class InputData extends AppCompatActivity {
+public class InputData{
 
     GreenDataSource myDb;
     TapcashData tapcash;
@@ -17,21 +22,36 @@ public class InputData extends AppCompatActivity {
     BusRouteData bus;
     BusData busD;
     MapData mapD;
+    UserLogin usr;
+    Context mContext;
+    TransaksiData data;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        myDb = new GreenDataSource(this);
+    public InputData(Context context){
+        mContext = context;
+        myDb = new GreenDataSource(mContext);
         getData();
     }
 
     public void getData(){
-        tapcash = new TapcashData(1, "Shalhan", "Radifan", 1150000, 25000, "12345678");
+        tapcash = new TapcashData(1, "Shalhan", "Radifan","12345678");
         myDb.addTapcash(tapcash);
-        tapcash = new TapcashData(2, "Dipa", "Mustaqim", 1250000, 15000, "12344478");
+        tapcash = new TapcashData(2, "Dipa", "Mustaqim","12344478");
         myDb.addTapcash(tapcash);
-        tapcash = new TapcashData(3, "Dikna", "Romtikayadi", 900000, 32000, "12224478");
+        tapcash = new TapcashData(3, "Dikna", "Romtikayadi", "12224478");
         myDb.addTapcash(tapcash);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c.getTime());
+// Now formattedDate have current date/time
+
+        data = new TransaksiData(1,1500000, 25000, formattedDate, 0, 1);
+        myDb.addTransaksi(data);
+        data = new TransaksiData(2,1250000, 15000, formattedDate, 0, 2);
+        myDb.addTransaksi(data);
+        data = new TransaksiData(3,900000, 10000, formattedDate, 0, 3);
+        myDb.addTransaksi(data);
+
 
         shel = new ShelterData(1, "Pintu Depan", -6.561742, 106.727135);
         myDb.addShelter(shel);
@@ -179,5 +199,8 @@ public class InputData extends AppCompatActivity {
         myDb.addMap(mapD);
         mapD = new MapData(11, "Rektorat" , -6.559973   , 106.725461);
         myDb.addMap(mapD);
+
+        usr = new UserLogin("", "0","");
+        myDb.userLogin(usr);
     }
 }

@@ -2,6 +2,7 @@ package com.example.shalhan.greencampus;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -19,12 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TapcashFragment extends Fragment {
+public class TapcashFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     Context context;
     View rootView, layout, layout2;
@@ -32,10 +36,8 @@ public class TapcashFragment extends Fragment {
     Double saldot, saldor;
     Button bIsiUlang;
     FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
     GreenDataSource myDb;
-    UserLogin usr;
-    TextView mDate;
+    GreenAdapter adapter2;
     int sett=0;
 
     public TapcashFragment() {
@@ -63,30 +65,37 @@ public class TapcashFragment extends Fragment {
         sSaldoR = (TextView) rootView.findViewById(R.id.tvSaldoR);
         sSaldoT = (TextView) rootView.findViewById(R.id.tvSaldoT);
 
+        ArrayList<ListPembayaran> data = new ArrayList<ListPembayaran>();
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = df.format(c.getTime());
-// Now formattedDate have current date/time
-        Toast.makeText(getActivity(), formattedDate, Toast.LENGTH_SHORT).show();
+        Cursor cursor2 = myDb.getAllUserData(myDb.getKeyId());
+        cursor2.moveToFirst();
+        do{
+            data.add(new ListPembayaran(cursor2.getInt(0), cursor2.getString(8), cursor2.getDouble(7)));
+        }while(cursor2.moveToNext());
 
-        String[] test = {"sempak", "sempak2", "sempak3"};
-        ListAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, test);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.transaksi);
-        listView.setAdapter(adapter);
+        adapter2 = new GreenAdapter(getActivity(), R.layout.transaksi_listview, data);
+        ListView list = (ListView) rootView.findViewById(R.id.transaksi);
+        list.setAdapter(adapter2);
+        /*
+        List<ListPembayaran> list = new ArrayList<ListPembayaran>();
+        list.add(new ListPembayaran(1,"16-Des-2015", 50000));
+        GreenAdapter adapter = new GreenAdapter(getActivity(),list);
+        ListView lv = (ListView) rootView.findViewById(R.id.transaksi);
+        lv.setAdapter(adapter);
+        */
 
         Cursor cursor = myDb.getAllUserData();
         Cursor cursorLogin = myDb.getUserLogin();
         cursor.moveToFirst();
         cursorLogin.moveToFirst();
         do{
-            if(cursorLogin.getString(0).equals(cursor.getString(0))){
-                saldot = cursor.getDouble(5);
-                saldor = cursor.getDouble(4);
+            if(cursorLogin.getString(0).equals(cursor.getString(1))){
+                saldot = cursor.getDouble(6);
+                saldor = cursor.getDouble(5);
 
-                sName.setText(": " + cursor.getString(1) + " " + cursor.getString(2));
-                sNoRek.setText(": " + cursor.getString(3));
+                sName.setText(": " + cursor.getString(2) + " " + cursor.getString(3));
+                sNoRek.setText(": " + cursor.getString(4));
                 sSaldoT.setText(": Rp. " + String.valueOf(saldot));
                 sSaldoR.setText(": Rp. " + String.valueOf(saldor));
             }
@@ -106,7 +115,7 @@ public class TapcashFragment extends Fragment {
 
                 TransitionManager.beginDelayedTransition(viewGroup);
 
-                if(sett==0) {
+                if (sett == 0) {
                     ViewGroup.LayoutParams sizeRules = layout.getLayoutParams();
                     sizeRules.height = 650;
                     layout.setLayoutParams(sizeRules);
@@ -114,7 +123,7 @@ public class TapcashFragment extends Fragment {
                     sizeRules2.height = 500;
                     layout2.setLayoutParams(sizeRules2);
                     sett = 1;
-                }else{
+                } else {
                     ViewGroup.LayoutParams sizeRules = layout.getLayoutParams();
                     sizeRules.height = 230;
                     layout.setLayoutParams(sizeRules);
@@ -126,7 +135,7 @@ public class TapcashFragment extends Fragment {
 
 
                 TapcashDesFragment tapcashDesFragment = new TapcashDesFragment();
-                FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.isitapcash, tapcashDesFragment, "Tapcash");
                 fragmentTransaction.commit();
             }
@@ -146,5 +155,15 @@ public class TapcashFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

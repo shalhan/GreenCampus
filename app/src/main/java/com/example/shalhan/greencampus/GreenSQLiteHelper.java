@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  */
 public class GreenSQLiteHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "greencapp.db";
+    private static final String DB_NAME = "greencampp.db";
     private static final int DB_VERSION = 1;
 
     //table USER
@@ -19,32 +19,45 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLLUMN_PASSWORD = "PASWORD";
     public static final String COLLUMN_NOREK=  "NOREK";
     public static final String COLLUMN_EMAIL = "EMAIL";
-    public static final String COLLUMN_STATUS = "STATUS";
     public static final String CREATE_USER =
             "CREATE TABLE " + USER_TABLE + "("
                     + COLLUMN_NOREK + " TEXT PRIMARY KEY,"
                     + COLLUMN_USERNAME + " TEXT,"
                     + COLLUMN_PASSWORD + " TEXT,"
-                    + COLLUMN_EMAIL + " TEXT, "
-                    + COLLUMN_STATUS + " INTEGER)";
+                    + COLLUMN_EMAIL + " TEXT)";
 
     //table tapcash
     public static final String TAPCASH_TABLE = "TAPCASH";
     public static final String TAPCASH_ID = "KEY_ID";
     public static final String COLLUMN_FNAME = "FNAME";
     public static final String COLLUMN_LNAME = "LNAME";
-    public static final String COLLUMN_SALDOT = "SALDOT";
-    public static final String COLLUMN_SALDOR = "SALDOR";
     public static final String FOREIGN_KEY_NOREK = "USER_NOREK";
     public static final String CREATE_TAPCASH =
             "CREATE TABLE " + TAPCASH_TABLE +"("
                     + TAPCASH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLLUMN_SALDOT + " REAL, " +
-                    COLLUMN_SALDOR + " REAL, " +
                     COLLUMN_FNAME + " TEXT, " +
                     COLLUMN_LNAME + " TEXT, " +
                     FOREIGN_KEY_NOREK + " TEXT, " +
                     "FOREIGN KEY(" + FOREIGN_KEY_NOREK + ") REFERENCES USER(NOREK))";
+
+    //table transaksi
+    public static final String TRANSAKSI_TABLE = "TRANSAKSI";
+    public static final String TRANSAKSI_ID = "KEY_ID";
+    public static final String COLLUMN_SALDOT = "SALDOT";
+    public static final String COLLUMN_SALDOR = "SALDOR";
+    public static final String COLLUMN_TRANSAKSI = "BESAR_TRANSAKSI";
+    public static final String COLLUMN_DATE = "DATE";
+    public static final String FOREIGN_KEY_TAPCASH = "TAPCASH_ID";
+    public static final String CREATE_TRANSAKSI =
+            "CREATE TABLE " + TRANSAKSI_TABLE +"("
+                    + TRANSAKSI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLLUMN_SALDOT + " REAL, " +
+                    COLLUMN_SALDOR + " REAL, " +
+                    COLLUMN_TRANSAKSI + " REAL, " +
+                    COLLUMN_DATE + " TEXT, " +
+                    FOREIGN_KEY_TAPCASH + " INTEGER, " +
+                    "FOREIGN KEY(" + FOREIGN_KEY_TAPCASH + ") REFERENCES TAPCASH(KEY_ID))";
+
 
     //table shelter
     public static final String SHELTER_TABLE = "SHELTER";
@@ -65,14 +78,11 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
     public static final String BUS_ID = "BUS_ID";
     public static final String COLLUMN_NOBUS = "NOBUS";
     public static final String COLLUMN_JADWAL = "JADWAL";
-    public static final String FOREIGN_KEY_SHELTER ="SHELTER_ID";
     public static final String CREATE_BUS =
             "CREATE TABLE " + BUS_TABLE + "("
                     + BUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLLUMN_NOBUS + " TEXT, " +
-                    COLLUMN_JADWAL + " TEXT, " +
-                    FOREIGN_KEY_SHELTER + " INTEGER, " +
-                    "FOREIGN KEY(" + FOREIGN_KEY_SHELTER + ") REFERENCES SHELTER(SHELTER_ID))";
+                    COLLUMN_JADWAL + " TEXT)";
 
     //table bus_route
     public static final String BUS_ROUTE_TABLE = "BUS_ROUTE";
@@ -124,6 +134,7 @@ public class GreenSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_MAP);
         db.execSQL(CREATE_BUS_ROUTE);
         db.execSQL(CREATE_LOGIN);
+        db.execSQL(CREATE_TRANSAKSI);
     }
 
     @Override

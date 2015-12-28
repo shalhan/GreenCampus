@@ -24,15 +24,15 @@ public class GreenDataSource {
         database.close();
     }
 
-    public SQLiteDatabase read(){
+    private SQLiteDatabase read(){
         return mGreenSQLiteHelper.getReadableDatabase();
     }
 
-    public SQLiteDatabase open(){
+    private SQLiteDatabase open(){
         return mGreenSQLiteHelper.getWritableDatabase();
     }
 
-    public void close(SQLiteDatabase database){
+    private void close(SQLiteDatabase database){
         database.close();
     }
 
@@ -46,7 +46,6 @@ public class GreenDataSource {
         userValues.put(mGreenSQLiteHelper.COLLUMN_PASSWORD, userData.getPassword());
         userValues.put(mGreenSQLiteHelper.COLLUMN_NOREK, userData.getNoRek());
         userValues.put(mGreenSQLiteHelper.COLLUMN_EMAIL, userData.getEmail());
-        userValues.put(mGreenSQLiteHelper.COLLUMN_STATUS, userData.getStatus());
         database.insert(GreenSQLiteHelper.USER_TABLE, null, userValues);
 
         database.setTransactionSuccessful();
@@ -67,10 +66,8 @@ public class GreenDataSource {
         userValues.put(mGreenSQLiteHelper.TAPCASH_ID, tapcash.getId());
         userValues.put(mGreenSQLiteHelper.COLLUMN_FNAME, tapcash.getFName());
         userValues.put(mGreenSQLiteHelper.COLLUMN_LNAME, tapcash.getLName());
-        userValues.put(mGreenSQLiteHelper.COLLUMN_SALDOT, tapcash.getSaldoT());
-        userValues.put(mGreenSQLiteHelper.COLLUMN_SALDOR, tapcash.getSaldoR());
         userValues.put(mGreenSQLiteHelper.FOREIGN_KEY_NOREK, tapcash.getUser_Id());
-        database.insert(GreenSQLiteHelper.TAPCASH_TABLE, null, userValues);
+        long tapcashId = database.insert(GreenSQLiteHelper.TAPCASH_TABLE, null, userValues);
 
         database.setTransactionSuccessful();
         database.endTransaction();
@@ -80,6 +77,24 @@ public class GreenDataSource {
 
     }
 
+    public void addTransaksi(TransaksiData data){
+        SQLiteDatabase database = open();
+        database.beginTransaction();
+
+        ContentValues transaksiValues = new ContentValues();
+        transaksiValues.put(mGreenSQLiteHelper.TRANSAKSI_ID, data.getId());
+        transaksiValues.put(mGreenSQLiteHelper.COLLUMN_SALDOR, data.getSaldor());
+        transaksiValues.put(mGreenSQLiteHelper.COLLUMN_SALDOT, data.getSaldot());
+        transaksiValues.put(mGreenSQLiteHelper.COLLUMN_TRANSAKSI, data.getBiaya());
+        transaksiValues.put(mGreenSQLiteHelper.COLLUMN_DATE, data.getDate());
+        transaksiValues.put(mGreenSQLiteHelper.FOREIGN_KEY_TAPCASH,data.getTapcashId());
+        database.insert(GreenSQLiteHelper.TRANSAKSI_TABLE, null, transaksiValues);
+
+        database.setTransactionSuccessful();
+        database.endTransaction();
+        close(database);
+    }
+
     public boolean isNoRek(String key){
         SQLiteDatabase database = read();
 
@@ -87,7 +102,7 @@ public class GreenDataSource {
         Cursor cursor = database.rawQuery(selectquery, null);
         if(cursor.moveToFirst()){
             do{
-                if(cursor.getString(5).equals(key)) return true;
+                if(cursor.getString(3).equals(key)) return true;
             }while (cursor.moveToNext());
         }
 
@@ -104,8 +119,7 @@ public class GreenDataSource {
                         GreenSQLiteHelper.COLLUMN_NOREK,
                         GreenSQLiteHelper.COLLUMN_USERNAME,
                         GreenSQLiteHelper.COLLUMN_PASSWORD,
-                        GreenSQLiteHelper.COLLUMN_EMAIL,
-                        GreenSQLiteHelper.COLLUMN_STATUS},
+                        GreenSQLiteHelper.COLLUMN_EMAIL},
                 null,
                 null,
                 null,
@@ -166,12 +180,40 @@ public class GreenDataSource {
     public Cursor getAllUserData(){
         SQLiteDatabase database = read();
 
-        String select = "select username, fname, lname, norek, saldot, saldor  from user inner join tapcash on norek = user_norek";
+        String select = "select transaksi.key_id, username, fname, lname, norek, saldot, saldor, besar_transaksi, date, tapcash.key_id  " +
+                "from user, tapcash, transaksi where norek = user_norek and tapcash.key_id = transaksi.tapcash_id";
 
         Cursor cursor = database.rawQuery(select, null);
 
 
         return cursor;
+    }
+
+    public Cursor getAllUserData(int id){
+        SQLiteDatabase database = read();
+
+        String select = "select transaksi.key_id, username, fname, lname, norek, saldot, saldor, besar_transaksi, date, tapcash.key_id, email  " +
+                "from user, tapcash, transaksi where norek = user_norek and tapcash.key_id = transaksi.tapcash_id and tapcash.key_id = " + id;
+
+        Cursor cursor = database.rawQuery(select, null);
+
+
+        return cursor;
+    }
+
+    public int getKeyId(){
+
+        SQLiteDatabase database = read();
+
+        String select = "select user.username, tapcash.key_id from login, user, tapcash where login.username = user.username and norek = user_norek";
+        Cursor cursor = database.rawQuery(select, null);
+
+        cursor.moveToFirst();
+
+        int id = cursor.getInt(1);
+
+
+        return id;
     }
 
     public Cursor getBusSchedule(){
@@ -349,6 +391,16 @@ public class GreenDataSource {
         close(database);
     }
 
+    public void clearUser(){
+        SQLiteDatabase database = open();
+        database.beginTransaction();
+
+        database.delete(mGreenSQLiteHelper.USER_TABLE, null, null);
+
+        database.setTransactionSuccessful();
+        database.endTransaction();
+        close(database);
+    }
 
 }
 

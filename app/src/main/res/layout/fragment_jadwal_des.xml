@@ -43,7 +43,8 @@
             android:layout_below="@+id/tvNoBus"
             android:layout_alignLeft="@+id/textview"
             android:layout_alignStart="@+id/textview"
-            android:contextClickable="false" />
+            android:contextClickable="false"
+            />
 
     </RelativeLayout>
 </LinearLayout>

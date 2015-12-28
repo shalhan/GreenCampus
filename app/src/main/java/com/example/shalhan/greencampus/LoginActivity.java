@@ -38,8 +38,8 @@ public class LoginActivity extends AppCompatActivity{
         });
 
 
-        sUsername = (EditText) findViewById(R.id.etUsername);
-        sPassword = (EditText) findViewById(R.id.etPassword);
+        sUsername = (EditText) findViewById(R.id.etUsernamel);
+        sPassword = (EditText) findViewById(R.id.etPasswordl);
 
         sLogin = (Button) findViewById(R.id.bLogin);
         myDb = new GreenDataSource(this);

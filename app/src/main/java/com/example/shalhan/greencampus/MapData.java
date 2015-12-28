@@ -17,16 +17,15 @@ public class MapData implements Serializable {
     }
 
     public MapData(int id, String nama, double x, double y){
-        map_id = id;
-        namaMap = nama;
-        koordinatx = x;
-        koordinaty = y;
+        setMap_id(id);
+        setKoordinatx(x);
+        setKoordinaty(y);
+        setNamaMap(nama);
     }
 
     public int getMap_id() {
         return map_id;
     }
-
     public void setMap_id(int map_id) {
         this.map_id = map_id;
     }
@@ -34,7 +33,6 @@ public class MapData implements Serializable {
     public String getNamaMap() {
         return namaMap;
     }
-
     public void setNamaMap(String namaMap) {
         this.namaMap = namaMap;
     }
@@ -42,7 +40,6 @@ public class MapData implements Serializable {
     public double getKoordinatx() {
         return koordinatx;
     }
-
     public void setKoordinatx(double koordinatx) {
         this.koordinatx = koordinatx;
     }
@@ -50,7 +47,6 @@ public class MapData implements Serializable {
     public double getKoordinaty() {
         return koordinaty;
     }
-
     public void setKoordinaty(double koordinaty) {
         this.koordinaty = koordinaty;
     }

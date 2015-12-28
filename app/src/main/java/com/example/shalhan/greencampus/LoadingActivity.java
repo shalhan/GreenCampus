@@ -27,7 +27,7 @@ public class LoadingActivity extends AppCompatActivity {
                 }
             }
         };
-        myThread.run();
+        myThread.start();
     }
 
 }

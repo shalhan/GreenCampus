@@ -2,9 +2,12 @@ package com.example.shalhan.greencampus;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -27,10 +32,12 @@ public class TapcashDesFragment extends Fragment implements AdapterView.OnItemSe
     Context context;
     Spinner spinner;
     Button isiUlang;
-    double saldo = 0.0;
+    private double saldo;
     GreenDataSource myDb;
     EditText passlog;
     String passLog;
+    double sisaSaldor, sisaSaldot;
+    int id, transid;
 
 
     public TapcashDesFragment() {
@@ -48,13 +55,9 @@ public class TapcashDesFragment extends Fragment implements AdapterView.OnItemSe
         isiUlang = (Button) rootView.findViewById(R.id.bIsiUlang);
         passlog = (EditText) rootView.findViewById(R.id.etPassLog);
 
-
         myDb = new GreenDataSource(getActivity());
 
-
-
-
-
+        id = myDb.getKeyId();
 
         isiUlang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,17 +65,52 @@ public class TapcashDesFragment extends Fragment implements AdapterView.OnItemSe
                 passLog = passlog.getText().toString();
 
                 Cursor cursor = myDb.getUserLogin();
+                Cursor c = myDb.getAllUserData(id);
+                Cursor cc = myDb.getAllUserData();
                 boolean stat = false;
+                String success = "";
                 cursor.moveToFirst();
-                do {
+                c.moveToLast();
+
+                if (!(passLog.isEmpty())) {
                     if (passLog.equals(cursor.getString(2))) {
-                      stat = true;
+                        if (c.getDouble(5) + saldo <= 1000000) {
+                            if (c.getDouble(6) - saldo >= 20000) {
+                                stat = true;
+                                success = "Transaksi anda sukses";
+                            } else {
+                                success = "Saldo rekening anda tidak mencukupi";
+                            }
+                        } else {
+                            success = "Saldo tapcash anda sudah melewati batas";
+                        }
+                    } else {
+                        success = "Password yang anda masukkan salah";
                     }
-                }while(cursor.moveToNext());
-                if(stat){
-                    Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(context, "Gagal", Toast.LENGTH_LONG).show();
+                } else {
+                    success = "Masukkan password anda";
+                }
+
+                if (stat) {
+                    sisaSaldot = c.getDouble(5) + saldo;
+                    sisaSaldor = c.getDouble(6) - saldo;
+
+                    cc.moveToLast();
+                    transid = cc.getInt(0);
+
+                    Calendar ci = Calendar.getInstance();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = df.format(ci.getTime());
+
+                    TransaksiData data = new TransaksiData(++transid, sisaSaldor, sisaSaldot, formattedDate, saldo, id);
+                    myDb.addTransaksi(data);
+                    Intent intent = new Intent(getActivity(), PembayaranActivity.class);
+                    startActivity(intent);
+                    String mSaldo = String.valueOf(saldo);
+
+                    Toast.makeText(context, success, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, success, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -84,7 +122,7 @@ public class TapcashDesFragment extends Fragment implements AdapterView.OnItemSe
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-
+        spinner.setOnItemSelectedListener(this);
 
 
         return rootView;
@@ -93,6 +131,7 @@ public class TapcashDesFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
         switch (position){
             case 0:
                 saldo = 0;

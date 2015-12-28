@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 
 public class GreenCampusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,11 +29,10 @@ public class GreenCampusActivity extends AppCompatActivity
     GreenDataSource myDb;
     SessionManagement session;
     UserLogin usr;
-    TapcashData tapcash;
-    BusRouteData bus;
-    ShelterData shel;
-    BusData busD;
-    MapData mapD;
+
+    public GreenCampusActivity(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +58,10 @@ public class GreenCampusActivity extends AppCompatActivity
         itemSelect(R.id.nav_jadwal);
 
         myDb = new GreenDataSource(this);
+
+       InputData inputData = new InputData(this);
 //        usr = new UserLogin("", "0","");
 //        myDb.userLogin(usr);
-
-
     }
 
     @Override
@@ -78,10 +79,8 @@ public class GreenCampusActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         if (myDb.checkLogin()){
             getMenuInflater().inflate(R.menu.green_campus, menu);
-            return true;
-
+           return true;
         }else return false;
-
     }
 
     @Override
@@ -94,6 +93,7 @@ public class GreenCampusActivity extends AppCompatActivity
 
 
         //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             myDb.clearLogin();
             usr = new UserLogin("", "0","");
@@ -190,6 +190,5 @@ public class GreenCampusActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.group, jadwalDesFragment, "bus6");
         fragmentTransaction.commit();
     }
-
 
 }

@@ -10,18 +10,17 @@ public class UserData {
     private String mPassword;
     private String mNoRek;
     private String mEmail;
-    private int statusL;
+
 
     public UserData(){
 
     }
 
-    public UserData(String username, String pass, String norek, String email, int id){
+    public UserData(String username, String pass, String norek, String email){
         mUsername = username;
         mPassword = pass;
         mNoRek = norek;
         mEmail = email;
-        statusL = id;
     }
 
     public String getUsername() {
@@ -56,14 +55,5 @@ public class UserData {
     public void setEmail(String mEmail) {
         this.mEmail = mEmail;
     }
-
-    public void setStatus(int id){
-        statusL = id;
-    }
-
-    public int getStatus(){
-        return statusL;
-    }
-
 
 }
